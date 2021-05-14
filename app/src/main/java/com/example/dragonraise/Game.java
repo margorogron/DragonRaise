@@ -28,11 +28,12 @@ public class Game extends AppCompatActivity {
 
 }
 class GameView<context> extends View {
-    private Sprite fon;
+    private Sprite sdrag;
     Bitmap fonBitmap;
+    Bitmap drag;
     private int viewWidth;
     private int viewHeight;
-    private final int timerInterval = 30;
+    private final int timerInterval = 3;
 
     public Dragon dragon = new Dragon();
 
@@ -40,20 +41,54 @@ class GameView<context> extends View {
 
         super(context);
         fonBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fon_igry);
+        drag = BitmapFactory.decodeResource(getResources(), R.drawable.drakon);
 
-        /*int w = b.getWidth()/5;
-        int h = b.getHeight()/3;
+        int w = drag.getWidth()/5;
+        int h = drag.getHeight()/3;
 
         Rect firstFrame = new Rect(0, 0, w, h);
 
-        fon = new Sprite(0,0, b);*/
+        sdrag = new Sprite(450,900, drag, w*5, h*3);
         Timer t = new Timer();
         t.start();
     }
 
     protected void update() {
-        dragon.n--;
+       //счет настроения
+        if (dragon.x == 0){
+            dragon.n--;
+            dragon.x = 1000;
+        }
+        else{
+            dragon.x--;
+        }
+            //счет усталости
+        if (dragon.l == 0){
+            dragon.s--;
+            dragon.l = 850;
+        }
+            else{
+            dragon.l--;
+        }
+        //счет аппетита
+          if (dragon.k == 0){
+            dragon.e--;
+            dragon.k = 600;
+        }
+                else{
+            dragon.k--;
+        }
+        //счет гигиены
+         if (dragon.h == 0){
+            dragon.gi--;
+            dragon.h = 700;
+        }
+                    else{
+            dragon.h--;
+        }
+        /*if(dragon.n == 0){
 
+        }*/
         invalidate();
     }
 
@@ -82,7 +117,7 @@ class GameView<context> extends View {
         Paint p = new Paint();
         canvas.drawBitmap(fonBitmap, new Rect(0, 0, fonBitmap.getWidth(), fonBitmap.getHeight()),
                 new Rect(0, 0, viewWidth, viewHeight), p);
-
+        sdrag.draw(canvas);
         p.setAntiAlias(true);
         p.setTextSize(45.0f);
         p.setColor(Color.YELLOW);

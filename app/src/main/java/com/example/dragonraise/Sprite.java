@@ -10,17 +10,21 @@ import android.graphics.Rect;
 public class Sprite {
     private double x;
     private double y;
+    private double w;
+    private double h;
     private Bitmap bitmap;
 
-    public Sprite(double x, double y, Bitmap bitmap) {
+    public Sprite(double x, double y, Bitmap bitmap, double w, double h) {
         this.x = x;
         this.y = y;
         this.bitmap = bitmap;
+        this.w = w;
+        this.h = h;
     }
     public void draw (Canvas canvas) {
         Paint p = new Paint();
         Rect source = new Rect(0, 0, (int)(bitmap.getWidth()), (int)(bitmap.getHeight()));
-        Rect destination = new Rect((int)x, (int)y, (int)(x + bitmap.getWidth()), (int)(y + bitmap.getHeight()));
+        Rect destination = new Rect((int)x, (int)y, (int)(x + w), (int)(y + h));
         canvas.drawBitmap(bitmap, source, destination,  p);
     }
 }
