@@ -23,6 +23,9 @@ public class Sprite {
         this.w = w;
         this.h = h;
     }
+    public void changeBitmap(Bitmap bitmap){
+        this.bitmap = bitmap;
+    }
     public void draw (Canvas canvas) {
         Paint p = new Paint();
         Rect source = new Rect(0, 0, (int)(bitmap.getWidth()), (int)(bitmap.getHeight()));
