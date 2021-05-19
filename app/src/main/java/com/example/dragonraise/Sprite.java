@@ -14,6 +14,8 @@ public class Sprite {
     private double y;
     private double w;
     private double h;
+    private double vh = 1716;
+    private double vw = 1200;
     private Bitmap bitmap;
 
     public Sprite(double x, double y, Bitmap bitmap, double w, double h) {
@@ -26,15 +28,17 @@ public class Sprite {
     public void changeBitmap(Bitmap bitmap){
         this.bitmap = bitmap;
     }
-    public void draw (Canvas canvas) {
+    public void draw (Canvas canvas, int viewWidth, int viewHeight) {
+    //public void draw (Canvas canvas) {
         Paint p = new Paint();
         Rect source = new Rect(0, 0, (int)(bitmap.getWidth()), (int)(bitmap.getHeight()));
-        Rect destination = new Rect((int)x, (int)y, (int)(x + w), (int)(y + h));
+        Rect destination = new Rect((int)(x*vw/viewWidth), (int)(y*vh/viewHeight), (int)((x + w)*vw/viewWidth), (int)((y + h)*vh/viewHeight));
         canvas.drawBitmap(bitmap, source, destination,  p);
     }
     public boolean click(double cx, double cy){
         return (cx>=x)&&(cx<=x+w)&&(cy<=y+h)&&(cy>=y);
     }
+
 }
 
 

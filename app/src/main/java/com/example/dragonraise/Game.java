@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -39,13 +40,14 @@ class GameView<context> extends View {
     Bitmap drag;
     Bitmap ndrag;
     Bitmap eedrag;
-    private Sprite_spat sspat;
+    Bitmap spitdrag;
+    private Sprite sspat;
     Bitmap spatt;
-    private Sprite_myt myt;
+    private Sprite myt;
     Bitmap mytt;
-    private Sprite_est est;
+    private Sprite est;
     Bitmap estt;
-    private Sprite_igra igra;
+    private Sprite igra;
     Bitmap igratt;
     Timer t;
 
@@ -67,6 +69,7 @@ class GameView<context> extends View {
 
         fonBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fon_igry);
         drag = BitmapFactory.decodeResource(getResources(), R.drawable.drakon1);
+        spitdrag = BitmapFactory.decodeResource(getResources(), R.drawable.drakon_plachet);
         ndrag = BitmapFactory.decodeResource(getResources(), R.drawable.drakon);
         eedrag = BitmapFactory.decodeResource(getResources(), R.drawable.drakon2);
         spatt = BitmapFactory.decodeResource(getResources(), R.drawable.spat);
@@ -92,10 +95,10 @@ class GameView<context> extends View {
         Rect firstFrame = new Rect(0, 0, w, h);
 
         sdrag = new Sprite(450, 900, drag, w, h);
-        sspat = new Sprite_spat(100, 1550, spatt, we, he);
-        myt = new Sprite_myt(320, 1500, mytt, wei, hei);
-        est = new Sprite_est(546, 1500, estt, weig, heig);
-        igra = new Sprite_igra(732, 1500, igratt, weigh, heigh);
+        sspat = new Sprite(100, 1550, spatt, we, he);
+        myt = new Sprite(320, 1500, mytt, wei, hei);
+        est = new Sprite(546, 1500, estt, weig, heig);
+        igra = new Sprite(732, 1500, igratt, weigh, heigh);
         t = new Timer();
         t.start();
 
@@ -140,15 +143,21 @@ class GameView<context> extends View {
         if (dragon.nastroi <= 70 && dragon.eat <= 70 && dragon.son <= 70 && dragon.gigiena <= 70 &&
                 dragon.nastroi >= 40 && dragon.eat >= 40 && dragon.son >= 40 && dragon.gigiena >= 40) {
             sdrag.changeBitmap(ndrag);
-            //t.wait();
+
         }
-        if (dragon.nastroi <= 30 && dragon.eat <= 30 && dragon.son <= 30 && dragon.gigiena <= 30 ) {
+        if (dragon.nastroi <= 9 && dragon.eat <= 9 && dragon.son <= 9 && dragon.gigiena <= 9 &&
+                dragon.nastroi >= -1 && dragon.eat >= -1 && dragon.son >= -1 && dragon.gigiena >= -1) {
+            sdrag.changeBitmap(spitdrag);
+
+        }
+        if (dragon.nastroi <= 39 && dragon.eat <= 39 && dragon.son <= 39 && dragon.gigiena <= 39 &&
+                dragon.nastroi >= 10 && dragon.eat >= 10 && dragon.son >= 10 && dragon.gigiena >= 10) {
             sdrag.changeBitmap(eedrag);
-            //t.wait();
+
         }
         if (dragon.nastroi > 70 && dragon.eat > 70 && dragon.son > 70 && dragon.gigiena > 70) {
             sdrag.changeBitmap(drag);
-            //t.wait();
+
         }
         invalidate();
     }
@@ -179,11 +188,11 @@ class GameView<context> extends View {
         canvas.drawBitmap(fonBitmap, new Rect(0, 0, fonBitmap.getWidth(), fonBitmap.getHeight()),
                 new Rect(0, 0, viewWidth, viewHeight), p);
 
-        sdrag.draw(canvas);
-        sspat.draw(canvas);
-        myt.draw(canvas);
-        est.draw(canvas);
-        igra.draw(canvas);
+        sdrag.draw(canvas,viewWidth,viewHeight);
+        sspat.draw(canvas,viewWidth,viewHeight);
+        myt.draw(canvas,viewWidth,viewHeight);
+        est.draw(canvas,viewWidth,viewHeight);
+        igra.draw(canvas,viewWidth,viewHeight);
 
         p.setAntiAlias(true);
         p.setTextSize(45.0f);
@@ -229,6 +238,7 @@ class GameView<context> extends View {
 
         viewWidth = w;
         viewHeight = h;
+        Log.d("size", String.valueOf(w));
     }
 
 
@@ -240,21 +250,21 @@ class GameView<context> extends View {
                 dragon.lvl_ang += 0.3;
                 dragon.checkLv(dragon.lvl_ang);
             }
-        if (sspat.click_spat(event.getX(), event.getY())) {
+        if (sspat.click(event.getX(), event.getY())) {
             if (dragon.son < 100) {
                 dragon.son += 0.5;
                 dragon.lvl_ang += 0.3;
                 dragon.checkLv(dragon.lvl_ang);
             }
         }
-        if (myt.click_myt(event.getX(), event.getY())) {
+        if (myt.click(event.getX(), event.getY())) {
             if (dragon.gigiena < 100) {
                 dragon.gigiena += 0.5;
                 dragon.lvl_ang += 0.3;
                 dragon.checkLv(dragon.lvl_ang);
             }
         }
-        if (est.click_est(event.getX(), event.getY())) {
+        if (est.click(event.getX(), event.getY())) {
             if (dragon.eat < 100) {
                 dragon.eat +=0.7;
                 dragon.lvl_ang += 0.3;
@@ -262,7 +272,7 @@ class GameView<context> extends View {
             }
         }
 
-        if (igra.click_igra(event.getX(), event.getY())) {
+        if (igra.click(event.getX(), event.getY())) {
             if (dragon.nastroi < 100) {
                 dragon.nastroi += 0.5;
                 dragon.lvl_ang += 0.3;
