@@ -83,7 +83,7 @@ class GameView<context> extends View {
         //Resources resources = context.getResources();
         //DisplayMetrics metrics = resources.getDisplayMetrics();
 
-
+      // введение изображения
         fonBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fon_igry);
         oldfonBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fon_igry1);
         //sdrag = new Sprite(0.25, 0.25, 0.5, 0.5, BitmapFactory.decodeResource(getResources(), R.drawable.drakon1));
@@ -140,18 +140,24 @@ class GameView<context> extends View {
         //сохранение настроения
         String str_nastroi = Game.settings.getString("nastroi","1");
         dragon.nastroi = Double.valueOf(str_nastroi);
+
         //сохранение сна
         String str_son = Game.settings.getString("son","1");
         dragon.son = Double.valueOf(str_son);
+
         //сохранение гигиены
         String str_gigiena = Game.settings.getString("gigiena","1");
         dragon.gigiena = Double.valueOf(str_gigiena);
+
         //сохранение сытости
         String str_eat = Game.settings.getString("eat","1");
         dragon.eat = Double.valueOf(str_eat);
+
         //сохранение левела
         String str_lvl_ang = Game.settings.getString("lvl_ang","1");
         dragon.lvl_ang = Double.valueOf(str_lvl_ang);
+        String str_level = Game.settings.getString("level","1");
+        dragon.level = Double.valueOf(str_level);
         t = new Timer();
         t.start();
 
@@ -162,7 +168,7 @@ class GameView<context> extends View {
 
         //счет настроения
         if (dragon.x == 0) {
-            dragon.nastroi--;
+            if(dragon.nastroi > 0) dragon.nastroi--;
             dragon.x = 800;
         } else {
             dragon.x--;
@@ -170,7 +176,7 @@ class GameView<context> extends View {
         //счет усталости
         if(!dragon.sleeping) {
             if (dragon.l == 0) {
-                dragon.son--;
+               if(dragon.son > 0) dragon.son--;
                 dragon.l = 500;
             } else {
                 dragon.l--;
@@ -190,14 +196,14 @@ class GameView<context> extends View {
 
         //счет аппетита
         if (dragon.k == 0) {
-            dragon.eat--;
+            if(dragon.eat > 0)  dragon.eat--;
             dragon.k = 600;
         } else {
             dragon.k--;
         }
         //счет гигиены
         if (dragon.h == 0) {
-            dragon.gigiena--;
+           if(dragon.gigiena > 0) dragon.gigiena--;
             dragon.h = 700;
         } else {
             dragon.h--;
@@ -219,7 +225,7 @@ class GameView<context> extends View {
             t.cancel();
         }
 */
-
+       // эмоции дракона
         if (dragon.nastroi <= 70 && dragon.nastroi >= 40 ||
                 dragon.eat <= 70 && dragon.eat >= 40 ||
                 dragon.son <= 70 && dragon.son >= 40 ||
@@ -242,16 +248,18 @@ class GameView<context> extends View {
         }
         if(dragon.sleeping) sdrag.changeBitmap(spitdrag);
 
-
+           // сохранение
         SharedPreferences.Editor prefEditor = Game.settings.edit();
         prefEditor.putString("nastroi", String.valueOf(dragon.nastroi));
         prefEditor.putString("son", String.valueOf(dragon.son));
         prefEditor.putString("eat", String.valueOf(dragon.eat));
         prefEditor.putString("gigiena", String.valueOf(dragon.gigiena));
         prefEditor.putString("lvl_ang", String.valueOf(dragon.lvl_ang));
+        prefEditor.putString("level", String.valueOf((int)dragon.level));
         prefEditor.apply();
 
-       if(dragon.level >= 2){
+        //рост дракона
+       if(dragon.level >= 10){
            if (dragon.nastroi <= 70 && dragon.nastroi >= 40 ||
                    dragon.eat <= 70 && dragon.eat >= 40 ||
                    dragon.son <= 70 && dragon.son >= 40 ||
@@ -307,15 +315,17 @@ class GameView<context> extends View {
         canvas.drawBitmap(fonBitmap, new Rect(0, 0, fonBitmap.getWidth(), fonBitmap.getHeight()),
                 new Rect(0, 0, viewWidth, viewHeight), p);
 
-        if(dragon.level >= 2){
+        if(dragon.level >= 10){
             canvas.drawBitmap(oldfonBitmap, new Rect(0, 0, oldfonBitmap.getWidth(), oldfonBitmap.getHeight()),
                     new Rect(0, 0, viewWidth, viewHeight), p);
         }
-        sdrag.draw(canvas,viewWidth,viewHeight);
-        sspat.draw(canvas,viewWidth,viewHeight);
-        myt.draw(canvas,viewWidth,viewHeight);
-        est.draw(canvas,viewWidth,viewHeight);
-        igra.draw(canvas,viewWidth,viewHeight);
+        sdrag.draw(canvas,viewWidth,viewHeight); // дракон
+
+        sspat.draw(canvas,viewWidth,viewHeight); //кнопка спать
+        myt.draw(canvas,viewWidth,viewHeight); // кнопка гигиены
+        est.draw(canvas,viewWidth,viewHeight); // кнопка есть
+        igra.draw(canvas,viewWidth,viewHeight); // кнопка играть
+
 
         p.setAntiAlias(true);
         p.setTextSize(45.0f);
@@ -350,7 +360,7 @@ class GameView<context> extends View {
         paint.setStyle(Paint.Style.STROKE);
         p.setColor(Color.BLACK);
         p.setTextSize(65.0f);
-        canvas.drawText("" + dragon.level, 900, 150, p);
+        canvas.drawText("" + (int)dragon.level, 900, 150, p);
 
 
 

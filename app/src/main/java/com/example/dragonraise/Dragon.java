@@ -10,7 +10,7 @@ public class Dragon {
     int h = 700;
     int k = 600;
     int l = 500;
-    int level = 1;
+    double level = 1;
     double lvl_ang=0;
     public void checkLv(double lvl){
         if(lvl >= 360){

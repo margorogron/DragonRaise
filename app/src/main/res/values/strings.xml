@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">DragonRaise</string>
+    <string name="app_name">Dragon Raise</string>
+    <string name="button_start">Играть</string>
 </resources>
