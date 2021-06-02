@@ -37,7 +37,7 @@
         android:textColor="@color/rrrrrmm"
         android:layout_marginStart="200dp"
         android:layout_marginTop="350dp"
-        android:text="Марагарита Роженцева"
+        android:text="Маргарита Роженцева"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView3"
