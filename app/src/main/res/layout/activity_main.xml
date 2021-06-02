@@ -34,6 +34,7 @@
             android:layout_width="145dp"
             android:layout_height="64dp"
             android:onClick="rul"
+            android:textColor="@color/white"
             android:text="Правила"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/button2"
@@ -47,6 +48,7 @@
             android:layout_width="214dp"
             android:layout_height="68dp"
             android:onClick="user"
+            android:textColor="@color/white"
             android:text="Разработчики"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/button"
@@ -61,7 +63,7 @@
             android:layout_width="168dp"
             android:layout_height="75dp"
             android:onClick="game"
-
+            android:textColor="@color/white"
             android:text="Играть"
             android:textSize="32dp"
 
