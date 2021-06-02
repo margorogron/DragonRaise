@@ -26,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Timer;
 
 
-public class Game extends AppCompatActivity {
+public class Game extends AppCompatActivity { // игра симулятор дракона
 
     public static SharedPreferences settings;
 
@@ -273,7 +273,7 @@ class GameView<context> extends View {
         prefEditor.putString("level", String.valueOf((int) dragon.level));
         prefEditor.apply();
 
-        //рост дракона
+        //рост дракона, эмоции взрослого дракона
         if (dragon.level >= 10) {
             if (dragon.nastroi <= 70 && dragon.nastroi >= 40 ||
                     dragon.eat <= 70 && dragon.eat >= 40 ||
@@ -303,7 +303,7 @@ class GameView<context> extends View {
         invalidate();
     }
 
-    class Timer extends CountDownTimer {
+    class Timer extends CountDownTimer { // класс времени
 
         public Timer() {
             super(Integer.MAX_VALUE, timerInterval);
@@ -322,7 +322,7 @@ class GameView<context> extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas) { //класс рисования
 
         super.onDraw(canvas);
         Paint p = new Paint();
@@ -342,7 +342,7 @@ class GameView<context> extends View {
         igra.draw(canvas, viewWidth, viewHeight); // кнопка играть
         tren.draw(canvas, viewWidth, viewHeight); // кнопка тренировать
 
-
+    // введение статистики
         p.setAntiAlias(true);
         p.setTextSize(45.0f);
         p.setColor(Color.YELLOW);
@@ -358,7 +358,7 @@ class GameView<context> extends View {
         int gn = (int) dragon.gigiena;
         canvas.drawText("Гигиена:" + gn, 10, 200, p);
 
-
+        // рисования левела
         Paint paint = new Paint();
         paint.setColor(Color.WHITE); // установим белый цвет
         paint.setStrokeWidth(5);
@@ -367,7 +367,6 @@ class GameView<context> extends View {
         final RectF oval = new RectF();
         oval.set(870, 80, 970, 180);
         canvas.drawArc(oval, 0, 360, true, paint);
-
 
         paint.setStyle(Paint.Style.STROKE);
         oval.set(840, 50, 1000, 210);
@@ -392,7 +391,7 @@ class GameView<context> extends View {
 
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) { // касание экрана
 
             if (sdrag.click(event.getX(), event.getY())) {
                 dragon.sleeping = false;
@@ -449,11 +448,12 @@ class GameView<context> extends View {
 
                 dragon.sleeping = false;
                 if (dragon.son > 10) {
-                    dragon.lvl_ang += 1;
                     dragon.nastroi -= 0.2;
                     dragon.eat -= 0.3;
                     dragon.gigiena -= 0.3;
+                    dragon.lvl_ang += 100;
                 }
+
                 dragon.checkLv(dragon.lvl_ang);
 
             }

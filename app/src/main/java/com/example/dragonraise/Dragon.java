@@ -1,6 +1,6 @@
 package com.example.dragonraise;
 
-public class Dragon {
+public class Dragon { // класс для переменных
     double nastroi = 1;
     double son = 1;
     double eat = 1;

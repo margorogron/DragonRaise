@@ -18,7 +18,7 @@ import java.util.Random;
  * Created by Компьютер on 04.04.2017.
  */
 
-public class DrawThread extends Thread {
+public class DrawThread extends Thread { // мини игра
 
     private final SurfaceHolder surfaceHolder;
 
