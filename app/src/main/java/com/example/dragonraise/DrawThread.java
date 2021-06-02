@@ -72,7 +72,7 @@ public class DrawThread extends Thread { // мини игра
 
 
     @Override
-    public void run() {
+    public void run() {// основной метод, где происходит рисование
         while (running) {
             Canvas canvas = surfaceHolder.lockCanvas();
             if (canvas != null) {
@@ -98,13 +98,13 @@ public class DrawThread extends Thread { // мини игра
     }
 }
 
-class Dot {
+class Dot { // класс точка
     public double x;
     public double y;
     public double w;
     public double h;
-    public Bitmap bitmap;
-    public Bitmap dragBitmap;
+    public Bitmap bitmap; // обычный
+    public Bitmap dragBitmap; // при перемщении
 
 
     public boolean dragging = false;
@@ -133,28 +133,28 @@ class Dot {
 
     public void drag(double x, double y) {
         //Log.d("action", String.valueOf(x));
-        if (this.dragging) {
+        if (this.dragging) { // тащим
             this.x = x;
             this.y = y;
         }
     }
 
-    public void startDrag(double x, double y) {
+    public void startDrag(double x, double y) { // начало перетаскивания
         if (this.x - this.w / 2 <= x && this.x + this.w / 2 >= x && this.y - this.h / 2 <= y && this.y + this.h / 2 >= y)
             this.dragging = true;
     }
 
     public void stopDrag() {
         this.dragging = false;
-    }
+    } // заканчиваем тащить
 }
 
-class Dots {
+class Dots { // много точек
     final Random random = new Random();
-    public ArrayList<Dot> dots = new ArrayList<Dot>();
-    public ArrayList<Pair<Integer, Integer>> connect = new ArrayList<>();
+    public ArrayList<Dot> dots = new ArrayList<Dot>();// хранение точек
+    public ArrayList<Pair<Integer, Integer>> connect = new ArrayList<>(); // связь между точками
 
-    public Dots(int n, int m, int w, int h, Bitmap b, Bitmap d) {
+    public Dots(int n, int m, int w, int h, Bitmap b, Bitmap d) { // создание точек
         for (int i = 0; i < n; i++)
             dots.add(new com.example.dragonraise.Dot(random.nextInt(w), random.nextInt(h), 100, 100, b, d));
         for (int i = 0; i < m; i++) {
@@ -193,7 +193,7 @@ class Dots {
                 && area(c, d, a) * area(c, d, b) <= 0;
     }
 
-    public boolean check_intersect() {
+    public boolean check_intersect() { // проверка на существование перескающих линий
         boolean s = false;
         for(int i=0; i<connect.size(); i++)
             for (int j=i+1; j<connect.size(); j++){
@@ -211,7 +211,7 @@ class Dots {
         return s;
     }
 
-    public void draw(Canvas canvas, Paint paint) {
+    public void draw(Canvas canvas, Paint paint) { // рисует точки, потом связи
         for (com.example.dragonraise.Dot d : dots) d.draw(canvas, paint);
         for (Pair<Integer, Integer> p : connect) {
             com.example.dragonraise.Dot d1 = dots.get(p.first);
